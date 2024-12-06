@@ -1,0 +1,12 @@
+{
+  "type": "code",
+  "modid": "survivalcats",
+  "name": "Survival Handbook Categories",
+  "authors": [ "ZigTheHedge" ],
+  "description": "Adds a convinient way of viewing entire mod content in survival and creative",
+  "side": "client",
+  "version": "1.2.2-rc.2",
+  "dependency": {
+    "game": "1.16.0"
+  }
+}
