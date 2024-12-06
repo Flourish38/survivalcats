@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Vintagestory.API.Client;
 using Vintagestory.GameContent;
 
-namespace survivalcats.src
+namespace survivalcats
 {
     class GuiDialogHandbookBookmarks : GuiDialogHandbook
     {
@@ -36,7 +36,7 @@ namespace survivalcats.src
                     if (bookmark.Equals(element.Page.PageCode)) found = true;
             }
 
-            if(found)
+            if (found)
             {
                 // Remove bookmark from list
                 int i = allHandbookPages.Count;
@@ -65,7 +65,8 @@ namespace survivalcats.src
                 }
                 else
                     File.Delete(PatcherinitDetailGui.bookmarksPath);
-            } else
+            }
+            else
             {
                 if (!Directory.Exists(Path.GetDirectoryName(PatcherinitDetailGui.bookmarksPath)))
                     Directory.CreateDirectory(Path.GetDirectoryName(PatcherinitDetailGui.bookmarksPath));

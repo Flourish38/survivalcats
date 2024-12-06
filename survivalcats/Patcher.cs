@@ -13,7 +13,7 @@ using Vintagestory.API.Util;
 using Vintagestory.Client.NoObf;
 using Vintagestory.GameContent;
 
-namespace survivalcats.src
+namespace survivalcats
 {
     [HarmonyPatch(typeof(GuiDialogHandbook), "loadEntries")]
     class PatcherLoadEntries
@@ -36,7 +36,7 @@ namespace survivalcats.src
                     bookmarks.Add(bookmark);
             }
 
-            
+
             CreativeTabsConfig creativeTabsConfig = ___capi.Assets.TryGet("config/creativetabs.json").ToObject<CreativeTabsConfig>();
 
             foreach (TabConfig tab in creativeTabsConfig.TabConfigs)
@@ -315,13 +315,13 @@ namespace survivalcats.src
             }
         }
     }
-    
+
     [HarmonyPatch(typeof(GuiDialogHandbook), "initDetailGui")]
     static class PatcherinitDetailGui
     {
 
         public static string bookmarksPath = "";
-        
+
         static string patchButtonIn(ref ElementBounds bounds, ElementBounds parentBounds, BrowseHistoryElement element)
         {
             bounds = ElementBounds
@@ -357,7 +357,7 @@ namespace survivalcats.src
             ConstructorInfo m_ActionConsumable = AccessTools.Constructor(typeof(ActionConsumable), new Type[] { typeof(object), typeof(IntPtr) });
 
             MethodInfo m_FixedUnder = AccessTools.Method(typeof(ElementBounds), "FixedUnder");
-            MethodInfo m_WithFixedPadding = AccessTools.Method(typeof(ElementBounds), "WithFixedPadding", new Type[] { typeof(double), typeof(double) } );
+            MethodInfo m_WithFixedPadding = AccessTools.Method(typeof(ElementBounds), "WithFixedPadding", new Type[] { typeof(double), typeof(double) });
 
             FieldInfo f_BrowseHistoryElement = AccessTools.Field(typeof(GuiDialogHandbook), "browseHistory");
             MethodInfo m_Peek = AccessTools.Method(typeof(Stack<BrowseHistoryElement>), "Peek");
@@ -366,7 +366,7 @@ namespace survivalcats.src
             int foundOverview = 0;
             foreach (CodeInstruction instruction in instructions)
             {
-                if(instruction.Calls(m_FixedUnder) && foundOverview == 0)
+                if (instruction.Calls(m_FixedUnder) && foundOverview == 0)
                 {
                     foundOverview = 1;
                 }
@@ -376,7 +376,7 @@ namespace survivalcats.src
                     yield return new CodeInstruction(OpCodes.Ldc_I4_4);
                     continue;
                 }
-                if(instruction.Calls(m_WithFixedPadding) && foundOverview == 2)
+                if (instruction.Calls(m_WithFixedPadding) && foundOverview == 2)
                 {
                     foundOverview = 3;
                 }
@@ -415,10 +415,11 @@ namespace survivalcats.src
         public static void Postfix(GuiComposer ___detailViewGui, Stack<BrowseHistoryElement> ___browseHistory)
         {
             BrowseHistoryElement element = ___browseHistory.Peek();
-            if(!(element.Page is GuiHandbookItemStackPage))
+            if (!(element.Page is GuiHandbookItemStackPage))
             {
                 ___detailViewGui.GetButton("btn-bookmark").Enabled = false;
-            } else
+            }
+            else
                 ___detailViewGui.GetButton("btn-bookmark").Enabled = true;
         }
 
@@ -436,7 +437,8 @@ namespace survivalcats.src
                 if (instruction.opcode == OpCodes.Newobj)
                 {
                     yield return new CodeInstruction(OpCodes.Newobj, m_Constructor);
-                } else
+                }
+                else
                     yield return instruction;
             }
         }
@@ -510,7 +512,7 @@ namespace survivalcats.src
     {
         public static bool Prefix(ref string text, ref Dictionary<int, string> searchCache)
         {
-            if(text.StartsWith("@") || text.StartsWith("$"))
+            if (text.StartsWith("@") || text.StartsWith("$"))
                 searchCache = null;
             return true;
         }
@@ -577,7 +579,7 @@ namespace survivalcats.src
             {
                 if (skipnext == 0) yield return instruction;
                 else skipnext--;
-                if (instruction.opcode == OpCodes.Ldloc_0) 
+                if (instruction.opcode == OpCodes.Ldloc_0)
                     next = true;
                 else
                 {
@@ -589,10 +591,10 @@ namespace survivalcats.src
                     }
                     else next = false;
                 }
-                if(found)
+                if (found)
                 {
                     count--;
-                    if(count == 0)
+                    if (count == 0)
                     {
                         yield return new CodeInstruction(OpCodes.Call, m_GetProperTranslation);
                         skipnext = 2;

@@ -7,7 +7,7 @@ using Vintagestory.API.Client;
 using Vintagestory.API.Common;
 using Vintagestory.GameContent;
 
-namespace survivalcats.src
+namespace survivalcats
 {
     class GuiHandbookBookmarkedItemStackPage : GuiHandbookItemStackPage
     {
